@@ -1,7 +1,7 @@
 package cn.cc.servlet;
 
 import cn.cc.domain.User;
-import cn.cc.service.impl.userServiceImpl;
+import cn.cc.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +12,16 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/userListServlet")
-public class userListServlet extends HttpServlet {
+public class UserListServlet extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        userServiceImpl userService = new userServiceImpl();
-        List<User> Users = userService.findAll();
-        request.setAttribute("Users",Users);
+        UserServiceImpl userService = new UserServiceImpl();
+        List<User> users = userService.findAll();
+        request.setAttribute("users",users);
         request.getRequestDispatcher("/list.jsp").forward(request,response);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request, response);
     }

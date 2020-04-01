@@ -1,6 +1,6 @@
 package cn.cc.domain;
 
-public class manager {
+public class Manager {
     private int id;
     private String username;
     private String password;

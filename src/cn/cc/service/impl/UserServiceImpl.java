@@ -1,21 +1,19 @@
 package cn.cc.service.impl;
 
-import cn.cc.DAO.Impl.managerDaoImpl;
-import cn.cc.DAO.Impl.userDaoImpl;
-import cn.cc.DAO.userDao;
+import cn.cc.dao.impl.ManagerDaoImpl;
+import cn.cc.dao.impl.UserDaoImpl;
 import cn.cc.domain.PageBean;
 import cn.cc.domain.User;
-import cn.cc.domain.manager;
-import cn.cc.service.userService;
+import cn.cc.domain.Manager;
+import cn.cc.service.UserService;
 
-import javax.crypto.interfaces.PBEKey;
 import java.util.List;
 import java.util.Map;
 
 //对抽象逻辑的具体实现
-public class userServiceImpl implements userService {
+public class UserServiceImpl implements UserService {
     //该逻辑与数据库操作逻辑重合 可直接调用
-    userDaoImpl userDao = new userDaoImpl();
+    UserDaoImpl userDao = new UserDaoImpl();
     @Override
     public List<User> findAll() {
 
@@ -23,13 +21,13 @@ public class userServiceImpl implements userService {
     }
 
     @Override
-    public manager login(manager m) {
-        manager loginUser = new manager();
+    public Manager login(Manager m) {
+        Manager loginUser = new Manager();
         loginUser.setUsername(m.getUsername());
         loginUser.setPassword(m.getPassword());
 
-        managerDaoImpl managerDaoImpl = new managerDaoImpl();
-        manager result = managerDaoImpl.login(loginUser);
+        ManagerDaoImpl managerDaoImpl = new ManagerDaoImpl();
+        Manager result = managerDaoImpl.login(loginUser);
         return result;
     }
 
@@ -68,12 +66,12 @@ public class userServiceImpl implements userService {
         if (cur <= 0) {
             cur = 1;
         }
-        pb.setTotalNumber(new userDaoImpl().totalNumber(condition));
+        pb.setTotalNumber(new UserDaoImpl().totalNumber(condition));
         pb.setCurrentPage(cur);
         pb.setTotalPage(pb.getTotalNumber() % pb.getRows()==0 ? pb.getTotalNumber() / pb.getRows() :
                 pb.getTotalNumber() / pb.getRows() +1 );
         int start = (cur -1) * pb.getRows();
-        pb.setList(new userDaoImpl().findByCondition(start,pb.getRows(),condition));
+        pb.setList(new UserDaoImpl().findByCondition(start,pb.getRows(),condition));
         System.out.println(pb.getTotalNumber()+" "+pb.getTotalPage());
         return pb;
     }

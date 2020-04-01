@@ -2,7 +2,7 @@ package cn.cc.servlet;
 
 import cn.cc.domain.PageBean;
 import cn.cc.domain.User;
-import cn.cc.service.impl.userServiceImpl;
+import cn.cc.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.util.Map;
 
 @WebServlet("/userListByPageServlet")
-public class userListByPageServlet extends HttpServlet {
+public class UserListByPageServlet extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         //获取当前页面参数
@@ -25,7 +26,7 @@ public class userListByPageServlet extends HttpServlet {
         //获取条件查询参数
         Map<String, String[]> condition = request.getParameterMap();
         //根据条件查询
-        userServiceImpl userService = new userServiceImpl();
+        UserServiceImpl userService = new UserServiceImpl();
         PageBean<User> pb = userService.findByCondition(currentPage,condition);
         //回写查询结果
         request.setAttribute("pb",pb);
@@ -33,6 +34,7 @@ public class userListByPageServlet extends HttpServlet {
         request.getRequestDispatcher("/list.jsp").forward(request,response);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request, response);
     }

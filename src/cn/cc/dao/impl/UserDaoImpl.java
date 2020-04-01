@@ -1,24 +1,22 @@
-package cn.cc.DAO.Impl;
+package cn.cc.dao.impl;
 
-import cn.cc.DAO.userDao;
-import cn.cc.domain.PageBean;
+import cn.cc.dao.UserDao;
 import cn.cc.domain.User;
 import cn.cc.utils.JDBCutils;
-import com.mchange.v2.naming.JavaBeanObjectFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.*;
 
-public class userDaoImpl implements userDao {
+public class UserDaoImpl implements UserDao {
     private JdbcTemplate template = new JdbcTemplate(JDBCutils.getDataSource());
     @Override
     public List<User> findAll() {
         //查询所有记录
         String sql = "select * from user";
-        List<User> Users = template.query(sql, new BeanPropertyRowMapper<User>(User.class));
+        List<User> users = template.query(sql, new BeanPropertyRowMapper<User>(User.class));
 
-        return Users;
+        return users;
     }
 
     @Override
@@ -64,7 +62,6 @@ public class userDaoImpl implements userDao {
                 values.add("%"+value[0]+"%");
             }
         }
-
         sql = sb.toString();
         return template.queryForObject(sql, Integer.class, values.toArray());
     }
@@ -89,8 +86,8 @@ public class userDaoImpl implements userDao {
         sql = sb.toString();
         values.add(start);
         values.add(end);
-        List<User> Users = template.query(sql, new BeanPropertyRowMapper<User>(User.class), values.toArray());
-        return Users;
+        List<User> users = template.query(sql, new BeanPropertyRowMapper<User>(User.class), values.toArray());
+        return users;
 
     }
 }

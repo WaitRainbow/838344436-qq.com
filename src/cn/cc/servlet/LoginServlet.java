@@ -1,11 +1,7 @@
 package cn.cc.servlet;
 
-import cn.cc.DAO.Impl.managerDaoImpl;
-
-import cn.cc.DAO.userDao;
-import cn.cc.domain.User;
-import cn.cc.domain.manager;
-import cn.cc.service.impl.userServiceImpl;
+import cn.cc.domain.Manager;
+import cn.cc.service.impl.UserServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
 
@@ -20,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 @WebServlet("/loginServlet")
-public class loginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.doPost(req,resp);
@@ -49,7 +45,7 @@ public class loginServlet extends HttpServlet {
         //验证码正确
         //判断用户名和密码
         Map<String, String[]> parameterMap = req.getParameterMap();
-        manager manager = new manager();
+        Manager manager = new Manager();
         try {
             BeanUtils.populate(manager,parameterMap);
         } catch (IllegalAccessException e) {
@@ -58,8 +54,8 @@ public class loginServlet extends HttpServlet {
             e.printStackTrace();
         }
         //调用数据库服务
-        userServiceImpl userService = new userServiceImpl();
-        manager result = userService.login(manager);
+        UserServiceImpl userService = new UserServiceImpl();
+        Manager result = userService.login(manager);
 
 
         if (result == null) {

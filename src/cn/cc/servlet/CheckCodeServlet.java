@@ -13,6 +13,7 @@ import java.util.Random;
 
 @WebServlet("/checkCodeServlet")
 public class CheckCodeServlet extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int width = 80;
         int height = 40;
@@ -35,7 +36,8 @@ public class CheckCodeServlet extends HttpServlet {
         //生成随机角标
         Random ran = new Random();
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= 4; i++) {
+        int checkCodeLength =4;
+        for (int i = 1; i <= checkCodeLength; i++) {
             int index = ran.nextInt(str.length());
             //获取字符
             char ch = str.charAt(index);//随机字符
@@ -44,17 +46,17 @@ public class CheckCodeServlet extends HttpServlet {
             //2.3写验证码
             g.drawString(ch+"",width/5*i,height/2);
         }
-        String checkCode_session = sb.toString();
+        String checkCodeSession = sb.toString();
         //将验证码存入session
-        request.getSession().setAttribute("checkcode",checkCode_session);
+        request.getSession().setAttribute("checkcode",checkCodeSession);
 
 
         //2.4画干扰线
         g.setColor(Color.GREEN);
 
         //随机生成坐标点
-
-        for (int i = 0; i < 10; i++) {
+        int randomPoint = 10;
+        for (int i = 0; i < randomPoint; i++) {
             int x1 = ran.nextInt(width);
             int x2 = ran.nextInt(width);
 
@@ -70,6 +72,7 @@ public class CheckCodeServlet extends HttpServlet {
 
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request, response);
     }
